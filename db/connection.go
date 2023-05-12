@@ -1,6 +1,7 @@
 package db
 
 import (
+	"Assigment_6/initializers"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"log"
@@ -9,12 +10,14 @@ import (
 
 var DB *gorm.DB
 
-func ConnectToDb() {
+func ConnectToDb() error {
+	initializers.LoadEnv()
 	var err error
-	// refer https://github.com/go-sql-driver/mysql#dsn-data-source-name for details
 	dsn := os.Getenv("DB_URL")
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed To Connect")
+		return err
 	}
+	return nil
 }
