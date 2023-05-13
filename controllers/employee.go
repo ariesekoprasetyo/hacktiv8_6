@@ -5,6 +5,7 @@ import (
 	"Assigment_6/models"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm/clause"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -26,7 +27,10 @@ var body struct {
 var employee models.Employee
 
 func PostEmp(c *gin.Context) {
-	c.Bind(&body)
+	err := c.Bind(&body)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	post := models.Employee{
 		FullName: body.FullName,
 		Email:    body.Email,
@@ -111,11 +115,14 @@ func GetEmpById(c *gin.Context) {
 }
 
 func UpdateEmp(c *gin.Context) {
-	c.Bind(&body)
+	err := c.Bind(&body)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	id := c.Param("id")
 	num, _ := strconv.ParseUint(id, 10, 64)
 	db.DB.First(&employee, num)
-	err := db.DB.Model(&employee).Updates(&body).Error
+	err = db.DB.Model(&employee).Updates(&body).Error
 	if err != nil {
 		response := ApiResponse{
 			Code:          http.StatusBadRequest,
@@ -145,7 +152,7 @@ func DeleteEmp(c *gin.Context) {
 		response := ApiResponse{
 			Code:          http.StatusBadRequest,
 			Status:        "Fail",
-			Message:       "Fail To Update Employee",
+			Message:       "Fail To Delete Employee",
 			MessageDetail: err.Error(),
 			Data:          nil,
 		}
@@ -155,7 +162,7 @@ func DeleteEmp(c *gin.Context) {
 	response := ApiResponse{
 		Code:          http.StatusOK,
 		Status:        "Success",
-		Message:       "Success To Update Employee",
+		Message:       "Success To Delete Employee",
 		MessageDetail: "",
 		Data:          employee,
 	}
