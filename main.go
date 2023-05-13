@@ -5,6 +5,7 @@ import (
 	"Assigment_6/db"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 )
 
 func main() {
@@ -20,5 +21,8 @@ func main() {
 	r.PUT("/employee/:id", controllers.UpdateEmp)
 	r.DELETE("/employee/:id", controllers.DeleteEmp)
 
-	r.Run()
+	err = r.Run()
+	if err != nil {
+		log.Fatal("Can't Run Server")
+	}
 }
