@@ -3,11 +3,12 @@ package controllers
 import (
 	"Assigment_6/db"
 	"Assigment_6/models"
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm/clause"
 	"log"
 	"net/http"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm/clause"
 )
 
 type ApiResponse struct {
