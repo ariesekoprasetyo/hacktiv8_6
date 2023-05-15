@@ -4,8 +4,9 @@ import (
 	"Assigment_6/controllers"
 	"Assigment_6/db"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"log"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -20,6 +21,7 @@ func main() {
 	r.GET("/employee/:id", controllers.GetEmpById)
 	r.PUT("/employee/:id", controllers.UpdateEmp)
 	r.DELETE("/employee/:id", controllers.DeleteEmp)
+	fmt.Println("Aries Eko Prasetyo")
 
 	err = r.Run()
 	if err != nil {
